@@ -70,34 +70,12 @@ async def example():
 		print(f"URLs visited: {history.urls()}")
 		print(f"Final result: {history.final_result()}")
 
-		# Post-processing: Copy .txt to .py file with proper encoding
-		from pathlib import Path
-		import tempfile
-		
-		# Find the agent's temp directory
-		temp_base = Path(tempfile.gettempdir())
-		agent_dirs = list(temp_base.glob("browser_use_agent_*/browseruse_agent_data"))
-		
-		if agent_dirs:
-			latest_dir = max(agent_dirs, key=lambda p: p.stat().st_mtime)
-			txt_file = latest_dir / "playwright_test_script.txt"
-			
-			if txt_file.exists():
-				py_file = Path("playwright_test_script.py")
-				content = txt_file.read_text(encoding='utf-8')
-				py_file.write_text(content, encoding='utf-8')
-				print(f"\n✅ Playwright script saved to: {py_file.absolute()}")
-			else:
-				print("\n⚠️ Could not find flipkart_test_case.txt in agent data directory")
-		else:
-			print("\n⚠️ Could not locate agent data directory")
-
 		return history
 	finally:
 		# Explicit cleanup to avoid Windows asyncio warnings
 		if hasattr(agent, 'browser_session'):
 			await agent.browser_session.kill()
-		await asyncio.sleep(1)
+		await asyncio.sleep(5)
 
 if __name__ == "__main__":
     history = asyncio.run(example())
