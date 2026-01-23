@@ -17,7 +17,7 @@ async def example():
 		model='global.anthropic.claude-sonnet-4-5-20250929-v1:0',
 
 		# Model parameters
-		temperature=0.5,
+		temperature=0.2,
 		max_tokens=8192,
 
 		# Use boto3 session with SSO authentication
